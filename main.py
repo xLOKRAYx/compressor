@@ -1,10 +1,15 @@
 from PIL import Image
-
-f = open('test.zip', 'rb')
-data = f.read()
-f.close()
-print(data)
-
 img = Image.new('RGB', (1920, 1080))
-img.putdata(data)
+
+chunk_size = 256
+ 
+file = open("test.zip", "rb")
+offset = 0
+while True:
+    chunk = file.read(chunk_size)
+    if not chunk:
+        break
+    img.putdata(f"Read {len(chunk)} bytes: {chunk}", offset)
+    offset = offset + 1
+
 img.save('image.png')
